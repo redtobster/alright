@@ -144,6 +144,125 @@ class WhatsApp(object):
             LOGGER.exception(f"An exception occurred: {bug}")
             time.sleep(1)
             self.find_user(mobile)
+        
+    def create_wa_group(self, group_name, participants=[]):
+        three_dots = self.wait.until(
+            EC.presence_of_element_located(
+                (By.XPATH, '//*[@id="app"]/div[1]/div[1]/div[3]/header[1]/div[2]/div[1]/span[1]/div[3]/div[1]')
+            )
+        )
+        three_dots.click()
+
+        time.sleep(3)
+
+        new_group = self.wait.until(
+            EC.presence_of_element_located(
+                (By.XPATH, '//*[@id="app"]/div[1]/div[1]/div[3]/header[1]/div[2]/div[1]/span[1]/div[3]/span/div/ul/li[1]/div')
+            )
+        )
+        new_group.click()
+
+        time.sleep(3)
+
+        for name in participants:
+            search_box = self.wait.until(
+                EC.presence_of_element_located(
+                            (
+                                By.XPATH,
+                                '//*[@id="app"]/div[1]/div/div[2]/div/span/div/span/div/div/div/div/div/div[2]/input',
+                            )
+                        )
+                    )
+            search_box.clear()
+            search_box.send_keys(name)
+            
+            time.sleep(3)
+            personell = self.wait.until(
+            EC.presence_of_element_located(
+                        (
+                            By.XPATH,
+                            '//*[@id="app"]/div[1]/div/div[2]/div/span/div/span/div/div/div[2]/div',
+                        )
+                    )
+                )
+            personell.click()
+            time.sleep(3)
+            
+        create_group_button = self.wait.until(
+            EC.presence_of_element_located(
+                        (
+                            By.XPATH,
+                            '//*[@id="app"]/div[1]/div/div[2]/div/span/div/span/div/div/span/div',
+                        )
+                    )
+                )
+
+        create_group_button.click()
+
+        time.sleep(3)
+        xpath = '//*[@id="app"]/div[1]/div/div[2]/div/span/div/span/div/div/div/div[2]/div/div[2]/div/div/div[2]'
+        group_name_box = self.wait.until(
+            EC.presence_of_element_located(
+                        (
+                            By.XPATH,
+                            xpath,
+                        )
+                    )
+                )
+        group_name_box.clear()
+        group_name_box.send_keys(group_name)
+
+        time.sleep(3)
+
+        xpath = '//*[@id="app"]/div[1]/div/div[2]/div/span/div/span/div/div/span/div/div/span'
+        check_button = self.wait.until(
+            EC.presence_of_element_located(
+                        (
+                            By.XPATH,
+                            xpath,
+                        )
+                    )
+                )
+        check_button.click()
+
+        time.sleep(3)
+        xpath = '//*[@id="app"]/div[1]/div/div[4]/div/header/div[2]'
+        group_bar = self.wait.until(
+            EC.presence_of_element_located(
+                        (
+                            By.XPATH,
+                            xpath,
+                        )
+                    )
+                )
+
+        group_bar.click()
+
+        time.sleep(3)
+
+        xpath = '//*[@id="app"]/div[1]/div/div[5]/span/div/span/div/div/section/div[6]/div[2]/div[2]/div[2]/div'
+        invite_link = self.wait.until(
+            EC.presence_of_element_located(
+                        (
+                            By.XPATH,
+                            xpath,
+                        )
+                    )
+                )
+        invite_link.click()
+
+        time.sleep(3)
+        xpath = '//*[@id="app"]/div[1]/div/div[5]/span/div/span/div/div/div/div[4]'
+        copy_link = self.wait.until(
+            EC.presence_of_element_located(
+                        (
+                            By.XPATH,
+                            xpath,
+                        )
+                    )
+                )
+        copy_link.click()
+
 
     def find_by_username(self, username):
         """find_user_by_name ()
